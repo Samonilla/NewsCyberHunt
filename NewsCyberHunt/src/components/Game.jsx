@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Send, Lightbulb, Trophy, ArrowLeft, CheckCircle, XCircle } from 'lucide-react'
 import './Game.css'
@@ -7,6 +7,16 @@ const Game = ({ teams, questions, currentTeam, onSetCurrentTeam, onSubmitAnswer,
   const [answer, setAnswer] = useState('')
   const [feedback, setFeedback] = useState(null)
   const [showHint, setShowHint] = useState(false)
+
+  // Update currentTeam when teams array changes
+  useEffect(() => {
+    if (currentTeam) {
+      const updatedTeam = teams.find(t => t.id === currentTeam.id)
+      if (updatedTeam && updatedTeam.currentQuestion !== currentTeam.currentQuestion) {
+        onSetCurrentTeam(updatedTeam)
+      }
+    }
+  }, [teams, currentTeam, onSetCurrentTeam])
 
   const handleTeamSelect = (team) => {
     onSetCurrentTeam(team)
@@ -20,8 +30,7 @@ const Game = ({ teams, questions, currentTeam, onSetCurrentTeam, onSubmitAnswer,
     
     if (!answer.trim() || !currentTeam) return
 
-    const usedHint = currentTeam.usedHints.has(currentTeam.currentQuestion)
-    const isCorrect = onSubmitAnswer(currentTeam.id, answer, usedHint)
+    const isCorrect = onSubmitAnswer(currentTeam.id, answer)
     
     if (isCorrect) {
       setFeedback({ type: 'success', message: 'Correct! Moving to next question...' })

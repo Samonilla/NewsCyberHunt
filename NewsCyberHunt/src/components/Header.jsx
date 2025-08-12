@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Trophy, Users, Home } from 'lucide-react'
+import { Trophy, Users, Home, Shield } from 'lucide-react'
 import './Header.css'
 
 const Header = () => {
@@ -8,11 +8,17 @@ const Header = () => {
 
   return (
     <header className="header">
+      <div className="daily-cal-banner">
+        <h1>The Daily Californian</h1>
+      </div>
       <div className="header-content">
-        <Link to="/" className="logo">
-          <div className="logo-icon">🔍</div>
-          <h1>News CyberHunt</h1>
-        </Link>
+        <div className="logo-section">
+          <Link to="/" className="logo">
+            <div className="logo-icon">🔍</div>
+            <h2>CyberHunt</h2>
+          </Link>
+          <p className="news-dept">News Department</p>
+        </div>
         
         <nav className="nav">
           <Link 
@@ -35,6 +41,13 @@ const Header = () => {
           >
             <Trophy size={20} />
             <span>Leaderboard</span>
+          </Link>
+          <Link 
+            to="/admin" 
+            className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}
+          >
+            <Shield size={20} />
+            <span>Admin</span>
           </Link>
         </nav>
       </div>

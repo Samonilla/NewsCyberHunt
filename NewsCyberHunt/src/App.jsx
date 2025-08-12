@@ -6,6 +6,7 @@ import Header from './components/Header'
 import TeamSetup from './components/TeamSetup'
 import Game from './components/Game'
 import Leaderboard from './components/Leaderboard'
+import AdminPanel from './components/AdminPanel'
 import './App.css'
 
 function App() {
@@ -79,7 +80,10 @@ function App() {
     const regex = new RegExp(currentQ.answerRegex, 'i')
     
     if (regex.test(answer.trim())) {
-      const points = usedHint ? 2 : 5
+      // Check if the team used a hint for this specific question
+      const hasUsedHint = team.usedHints.has(team.currentQuestion)
+      const points = hasUsedHint ? 2 : 5
+      
       const updatedTeam = {
         ...team,
         score: team.score + points,
@@ -109,6 +113,17 @@ function App() {
     setTeams([])
     setCurrentTeam(null)
     setGameStarted(false)
+  }
+
+  const stopGame = () => {
+    setGameStarted(false)
+  }
+
+  const removeTeam = (teamId) => {
+    setTeams(prev => prev.filter(t => t.id !== teamId))
+    if (currentTeam?.id === teamId) {
+      setCurrentTeam(null)
+    }
   }
 
   if (loading) {
@@ -163,6 +178,21 @@ function App() {
                 <Leaderboard 
                   teams={teams}
                   questions={questions}
+                />
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
+                <AdminPanel 
+                  teams={teams}
+                  questions={questions}
+                  gameStarted={gameStarted}
+                  onStartGame={startGame}
+                  onStopGame={stopGame}
+                  onResetGame={resetGame}
+                  onAddTeam={addTeam}
+                  onRemoveTeam={removeTeam}
                 />
               } 
             />
