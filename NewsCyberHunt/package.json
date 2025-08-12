@@ -17,16 +17,16 @@
     "papaparse": "^5.4.1",
     "socket.io-client": "^4.7.2",
     "framer-motion": "^10.16.4",
-    "lucide-react": "^0.292.0"
+    "lucide-react": "^0.292.0",
+    "vite": "^4.4.5",
+    "@vitejs/plugin-react": "^4.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "vite": "^4.4.5"
+    "eslint-plugin-react-refresh": "^0.4.3"
   }
 } 
